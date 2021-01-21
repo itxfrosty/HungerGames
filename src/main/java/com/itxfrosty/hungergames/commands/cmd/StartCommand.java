@@ -5,6 +5,7 @@ import com.itxfrosty.hungergames.commands.CommandBase;
 import com.itxfrosty.hungergames.utils.SoundUtils;
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.WorldBorder;
 import org.bukkit.command.CommandSender;
@@ -26,6 +27,7 @@ public class StartCommand extends CommandBase {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             WorldBorder wb = Bukkit.getWorld("world").getWorldBorder();
+            Location center = new Location(Bukkit.getWorld("world"), 23, 91, 25);
 
             tributes.addAll(Bukkit.getOnlinePlayers());
 
@@ -36,17 +38,17 @@ public class StartCommand extends CommandBase {
                 Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(HungerGames.getInstance(), () -> {
                     count++;
 
-                    SoundUtils.playSoundForAll(player.getLocation(), Sound.ITEM_LODESTONE_COMPASS_LOCK, 1, 800);
+                    SoundUtils.playSoundForAll(center, Sound.ITEM_LODESTONE_COMPASS_LOCK, 1, 800);
 
-                    // TODO: Time it takes for the border to come in is not working.
                     if (count == 1) {
                         wb.setCenter(23,25);
-                        wb.setWarningTime(90);
-                        wb.setSize(150);
+                        wb.setWarningDistance(5);
+                        wb.setSize(150, 90);
                     }
 
                     if (count >= 90) {
-                        SoundUtils.playSoundForAll(player.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 0, 800);
+                        SoundUtils.playSoundForAll(center, Sound.BLOCK_BEACON_POWER_SELECT, 0, 800);
+                        count = 0;
                         Bukkit.getServer().getScheduler().cancelTasks(HungerGames.getInstance());
                     }
                 }, 0L, 20L);
