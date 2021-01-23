@@ -1,6 +1,7 @@
 package com.itxfrosty.hungergames.commands;
 
 import com.itxfrosty.hungergames.HungerGames;
+import com.itxfrosty.hungergames.commands.cmd.JoinCommand;
 import com.itxfrosty.hungergames.commands.cmd.StartCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
@@ -14,6 +15,7 @@ public class CommandModule {
 
 	public static void registerCommands() {
 		CommandModule.registerCommand(new StartCommand());
+		CommandModule.registerCommand(new JoinCommand());
 	}
 
 	public static void registerCommand(CommandBase command) {
