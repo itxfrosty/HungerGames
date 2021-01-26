@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.UUID;
 
 public class StartCommand extends CommandBase {
 
@@ -18,8 +19,7 @@ public class StartCommand extends CommandBase {
         super("start",null);
     }
 
-    @Getter public static ArrayList<Player> tributes = new ArrayList();
-    private int start = 0;
+    @Getter public static ArrayList<UUID> tributes = new ArrayList();
 
     @Override
     public void execute(CommandSender sender, String[] args) {
@@ -30,18 +30,23 @@ public class StartCommand extends CommandBase {
 
             TPLocations.locationRegister();
 
-            tributes.forEach(Player -> player.teleport(TPLocations.loc.get(rand.nextInt(TPLocations.loc.size()))));
+            tributes.forEach(UUID -> Bukkit.getPlayer(UUID).teleport(TPLocations.loc.get(rand.nextInt(TPLocations.loc.size()))));
+            System.out.println(player.getWalkSpeed());
+            player.setWalkSpeed(1);
 
-            Timer.timer5(player);
+            tributes.forEach(UUID -> Bukkit.getPlayer(UUID).setWalkSpeed(0));
+
+
+            Timer.StartTimer(player);
 
             if (tributes.size() <= 6) {
-               Timer.sixPlayerEvent(wb);
+               //Timer.SixPlayerLeft(wb);
             }
         }
     }
 }
 // Extra Code..... May be used LOL
-/*
+    /*
 
 Player player = (Player) sender;
             WorldBorder wb = Bukkit.getWorld("world").getWorldBorder();

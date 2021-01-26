@@ -1,12 +1,9 @@
 package com.itxfrosty.hungergames;
 
-import com.itxfrosty.hungergames.commands.CommandModule;
 import com.itxfrosty.hungergames.events.AntiGrief;
 import com.itxfrosty.hungergames.events.DeathEvent;
+import com.itxfrosty.hungergames.tasks.Load;
 import lombok.Getter;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.WorldBorder;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -18,15 +15,9 @@ public class HungerGames extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        CommandModule.registerCommands();
-
         registerEvents();
 
-        WorldBorder wb = Bukkit.getWorld("world").getWorldBorder();
-        Location center = new Location(Bukkit.getWorld("world"), 23, 91, 25);
-
-        wb.setCenter(center);
-        wb.setSize(1200);
+        Load.startup();
 
         this.getLogger().info(getName() + "is now enabled!");
     }

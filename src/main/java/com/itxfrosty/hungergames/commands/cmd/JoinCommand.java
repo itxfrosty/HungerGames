@@ -17,7 +17,7 @@ public class JoinCommand extends CommandBase {
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
-            StartCommand.tributes.add(player);
+            StartCommand.tributes.add(player.getUniqueId());
             player.sendMessage(ChatColor.GREEN + "You have joined the game. To start the game do /start!");
         }
     }

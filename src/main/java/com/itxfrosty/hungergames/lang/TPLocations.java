@@ -12,7 +12,7 @@ public class TPLocations {
     @Getter public static List<Location> loc = new ArrayList<>();
 
     private static final Location pod1 = new Location(Bukkit.getWorld("world"),23,80,25);
-    private static final Location pod2 = new Location(Bukkit.getWorld("world"),23,80,25);
+    private static final Location pod2 = new Location(Bukkit.getWorld("world"),25,80,29);
     private static final Location pod3 = new Location(Bukkit.getWorld("world"),23,80,25);
     private static final Location pod4 = new Location(Bukkit.getWorld("world"),23,80,25);
     private static final Location pod5 = new Location(Bukkit.getWorld("world"),23,80,25);
