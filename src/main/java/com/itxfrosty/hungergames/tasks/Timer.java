@@ -5,30 +5,27 @@ import com.itxfrosty.hungergames.utils.MessageUtil;
 import com.itxfrosty.hungergames.utils.SoundUtils;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class Timer implements Listener {
+public class Timer {
 
     // Timers
     private static int count = 0;
     private static int start = 0;
 
-    // TASKS
+    // Tasks
     private static int StartTimer = 1;
     private static int SixPlayerLeft = 2;
 
-    // Location
+    // Location - Middle
     private static final Location location = new Location(Bukkit.getWorld("world"),23,65,25);
 
     public static void StartTimer(Player player) {
         StartTimer = Bukkit.getScheduler().scheduleSyncRepeatingTask(HungerGames.getInstance(), () -> {
             if (start == 0) {
                 player.setWalkSpeed(0);
-                player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1000000, 100000));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1000000, 100000, false, false));
             }
             start++;
             if (start == 1) {

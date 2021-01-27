@@ -16,7 +16,6 @@ public class HungerGames extends JavaPlugin {
         instance = this;
 
         registerEvents();
-
         Load.startup();
 
         this.getLogger().info(getName() + "is now enabled!");

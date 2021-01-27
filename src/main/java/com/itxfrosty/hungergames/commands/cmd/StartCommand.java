@@ -36,11 +36,11 @@ public class StartCommand extends CommandBase {
 
             tributes.forEach(UUID -> Bukkit.getPlayer(UUID).setWalkSpeed(0));
 
-
             Timer.StartTimer(player);
 
+
             if (tributes.size() <= 6) {
-               //Timer.SixPlayerLeft(wb);
+               Timer.SixPlayerLeft(wb);
             }
         }
     }
