@@ -31,12 +31,8 @@ public class StartCommand extends CommandBase {
             TPLocations.locationRegister();
 
             tributes.forEach(UUID -> Bukkit.getPlayer(UUID).teleport(TPLocations.loc.get(rand.nextInt(TPLocations.loc.size()))));
-            System.out.println(player.getWalkSpeed());
-            player.setWalkSpeed(1);
 
-            tributes.forEach(UUID -> Bukkit.getPlayer(UUID).setWalkSpeed(0));
-
-            Timer.StartTimer(player);
+            tributes.forEach(UUID -> Timer.StartTimer(Bukkit.getPlayer(UUID)));
 
 
             if (tributes.size() <= 6) {

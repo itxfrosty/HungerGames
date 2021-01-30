@@ -5,8 +5,6 @@ import com.itxfrosty.hungergames.utils.MessageUtil;
 import com.itxfrosty.hungergames.utils.SoundUtils;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 public class Timer {
 
@@ -23,10 +21,6 @@ public class Timer {
 
     public static void StartTimer(Player player) {
         StartTimer = Bukkit.getScheduler().scheduleSyncRepeatingTask(HungerGames.getInstance(), () -> {
-            if (start == 0) {
-                player.setWalkSpeed(0);
-                player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1000000, 100000, false, false));
-            }
             start++;
             if (start == 1) {
                 MessageUtil.sendTitle(player,ChatColor.RED + "5", ChatColor.RED + "", 15, 2, 2);
@@ -54,8 +48,6 @@ public class Timer {
                 player.sendMessage(ChatColor.YELLOW + "The game starts in " + ChatColor.RED + "1" + ChatColor.YELLOW + " seconds!" );
             }
             if (start == 6) {
-                player.removePotionEffect(PotionEffectType.JUMP);
-                player.setWalkSpeed((float) 0.2);
                 Bukkit.getScheduler().cancelTask(StartTimer);
             }
         },0L,20L);

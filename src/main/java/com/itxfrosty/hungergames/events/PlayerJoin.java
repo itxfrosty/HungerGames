@@ -1,37 +1,33 @@
 package com.itxfrosty.hungergames.events;
 
-import com.itxfrosty.hungergames.commands.cmd.StartCommand;
-import com.itxfrosty.hungergames.utils.SoundUtils;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.server.v1_16_R3.*;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.craftbukkit.v1_16_R3.CraftServer;
 import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_16_R3.scoreboard.CraftScoreboard;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.scoreboard.Team;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
-public class DeathEvent implements Listener {
+public class PlayerJoin implements Listener {
 
     @EventHandler
-    public void onDeath(PlayerDeathEvent e) {
-        Player player = e.getEntity().getPlayer();
-        Location location = player.getLocation();
-
-        SoundUtils.playSoundForAll(location, Sound.ENTITY_WITHER_SPAWN,1,800);
-
-        StartCommand.getTributes().remove(player.getUniqueId());
-
-        player.setGameMode(GameMode.SPECTATOR);
-        spawnDeadPlayer(player,player.getDisplayName());
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        spawnFakePlayer(player,"itxfrosty");
     }
 
-    public void spawnDeadPlayer(Player player, String displayname){
+    public void spawnFakePlayer(Player player, String displayname){
         MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
         WorldServer world = ((CraftWorld) Bukkit.getWorlds().get(0)).getHandle();
 
@@ -52,6 +48,7 @@ public class DeathEvent implements Listener {
             PacketPlayOutNamedEntitySpawn packetPlayOutNamedEntitySpawn = new PacketPlayOutNamedEntitySpawn(npc);
             connection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, npc));
             connection.sendPacket(packetPlayOutNamedEntitySpawn);
+            npc.setPose(EntityPose.SLEEPING);
 
             ScoreboardTeam team = new ScoreboardTeam(((CraftScoreboard) Bukkit.getScoreboardManager().getMainScoreboard()).getHandle(), all.getName());
 
@@ -61,8 +58,6 @@ public class DeathEvent implements Listener {
 
             playerToAdd.add(npc.getName());
 
-            npc.setPose(EntityPose.SLEEPING);
-
             connection.sendPacket(new PacketPlayOutScoreboardTeam(team, 1));
             connection.sendPacket(new PacketPlayOutScoreboardTeam(team, 0));
             connection.sendPacket(new PacketPlayOutScoreboardTeam(team, playerToAdd, 3));
@@ -70,5 +65,4 @@ public class DeathEvent implements Listener {
             connection.sendPacket(new PacketPlayOutEntityMetadata(npc.getId(), npc.getDataWatcher(), false));
         }
     }
-
 }

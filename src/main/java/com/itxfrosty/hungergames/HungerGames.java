@@ -2,8 +2,10 @@ package com.itxfrosty.hungergames;
 
 import com.itxfrosty.hungergames.events.AntiGrief;
 import com.itxfrosty.hungergames.events.DeathEvent;
+import com.itxfrosty.hungergames.events.PlayerJoin;
 import com.itxfrosty.hungergames.tasks.Load;
 import lombok.Getter;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -21,6 +23,7 @@ public class HungerGames extends JavaPlugin {
         this.getLogger().info(getName() + "is now enabled!");
     }
 
+
     @Override
     public void onDisable() {
         this.getLogger().info(getName() + "is now disabled!");
@@ -30,6 +33,8 @@ public class HungerGames extends JavaPlugin {
         PluginManager pm = this.getServer().getPluginManager();
         pm.registerEvents(new AntiGrief(),this);
         pm.registerEvents(new DeathEvent(),this);
-    }
+        pm.registerEvents(new PlayerJoin(), this);
 
+
+    }
 }
